@@ -48,7 +48,7 @@ func gen_segment(i: int) -> float:
 	
 
 func generate_worm():
-	var size = gen_segment(0)/2
+	var size = gen_segment(0)
 	var last_position: Vector3 = Vector3.ZERO
 	last_position.z = abs(size)
 
@@ -57,7 +57,7 @@ func generate_worm():
 		last_position.x = 0
 		last_position.y = 0
 		var body_part = CSGBox3D.new()
-		last_position.z -= size/2	
+		last_position.z -= size
 		body_part.transform.origin = last_position
 		body_part.size = Vector3(size, size, size)
 		body_part.transform.origin = last_position
