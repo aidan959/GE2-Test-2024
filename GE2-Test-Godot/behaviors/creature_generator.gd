@@ -50,7 +50,7 @@ func generate_worm():
 		var csg : CSGBox3D = body_part.get_child(0)
 		var node_size = Vector3(size, size, size)  
 		csg.size = node_size
-		body_part.global_transform.position = last_position
-		head.call_deferred("add_child", body_part)
-		last_position.x = abs(size)
+		body_part.global_transform.origin = last_position
+		call_deferred("add_child", body_part)
+		last_position.x += abs(size)
 
