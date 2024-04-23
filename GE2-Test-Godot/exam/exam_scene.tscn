@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://behaviors/root.gd" id="1_prfgg"]
 [ext_resource type="Script" path="res://behaviors/creature_generator.gd" id="2_5mxg3"]
-[ext_resource type="PackedScene" uid="uid://bsmshwh5fdw1y" path="res://behaviors/Box.tscn" id="3_v4coc"]
+[ext_resource type="Script" path="res://behaviors/Boid.gd" id="2_k6so2"]
 [ext_resource type="Script" path="res://behaviors/FPController.gd" id="5_8r2ni"]
 [ext_resource type="Environment" uid="uid://b5dnnkkpxo3qc" path="res://behaviors/seek_environment..tres" id="6_qamsj"]
 [ext_resource type="PackedScene" uid="uid://dc24oh4o5erhi" path="res://behaviors/SceneSwitcher.tscn" id="7_ybx0x"]
@@ -12,14 +12,19 @@
 [node name="exam" type="Node3D"]
 script = ExtResource("1_prfgg")
 
-[node name="creature_generator" type="Node3D" parent="."]
+[node name="creature" type="Node" parent="."]
+
+[node name="Boid" type="CharacterBody3D" parent="creature"]
+script = ExtResource("2_k6so2")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="creature/Boid"]
+
+[node name="creature_generator" type="Node3D" parent="." node_paths=PackedStringArray("head")]
 script = ExtResource("2_5mxg3")
-length = 21
-frequency = 2.19
-start_angle = 16.75
-base_size = 0.96
-multiplier = 5.22
-head_scene = ExtResource("3_v4coc")
+length = 20
+frequency = 1.8
+start_angle = 23.482
+head = NodePath("../creature/Boid")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)

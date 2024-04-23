@@ -7,7 +7,8 @@ extends Node3D
 @export var draw_gizmos: bool = true
 @export var base_size: float = 1.0
 @export var multiplier: float= 5.0
-@export var head_scene: PackedScene = null
+@export var head: Boid = null
+@export var body_scene: PackedScene = preload("res://body_part.tscn")
 
 func _process(delta):
 	if Engine.is_editor_hint() and draw_gizmos:	
@@ -19,36 +20,37 @@ func _process(delta):
 func do_draw_gizmos():
 	var last_position = Vector3.ZERO
 	for i in range(length):
-		var angle = start_angle + i * 2 * PI / length  
-		var size = base_size * (1 + sin(angle)) 
-		DebugDraw3D.draw_box(last_position,Quaternion.IDENTITY	, Vector3(size, size, size), Color(0, 1, 0) )
-		last_position.x += size
+		var size = gen_segment(i)
+		var pos : Vector3
+		if i != 0:
+			pos = Vector3(last_position.x + abs(size), -size/2, -size/2)
+		else:
+			pos = Vector3(0, -size/2, -size/2)
+			
+		DebugDraw3D.draw_box(pos, Quaternion.IDENTITY, Vector3(size, size, size), Color(1, 0, 0))
+		last_position.x = pos.x
 func _ready():
 	if Engine.is_editor_hint() and draw_gizmos:		
 		do_draw_gizmos()
 	if not Engine.is_editor_hint():		
-		for i in range(length):
-			var angle = start_angle + i * 2 * PI / length  
-			var size = base_size * (1 + sin(angle)) 
-			var node = head_scene.instantiate()
-			node.name = "Tail{0}".format(i)
-			node.global_transform.origin.x = sin(angle * 1) 
-			DebugDraw3D.draw_box(Vector3(i,0,0),Quaternion.IDENTITY, Vector3(size, size, size), Color(0, 1, 0) )
-			add_child(node)
-			print(sin(angle * i))	
+		generate_worm()	
 
-	
-	
+func gen_segment(i: int) -> float:
+	var angle = start_angle + i * 2 * PI * frequency / length 
+	var size = abs(base_size + sin(angle) * (multiplier)) 
+	return size
 	
 	
 
 func generate_worm():
+	var last_position = Vector3.ZERO
 	for i in range(length):
-		var angle = start_angle + i * 2 * PI / length  
-		var size = base_size * (1 + sin(angle)) 
-		var node = head_scene.instance()
-		node.name = "Tail{0}".format(i)
-		node.scale = Vector3(size, size, size)  
-		node.global_transform.origin.x = i  
-		add_child(node)
+		var size = gen_segment(i)
+		var body_part = body_scene.instantiate()
+		var csg : CSGBox3D = body_part.get_child(0)
+		var node_size = Vector3(size, size, size)  
+		csg.size = node_size
+		body_part.global_transform.position = last_position
+		head.call_deferred("add_child", body_part)
+		last_position.x = abs(size)
 
