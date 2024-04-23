@@ -33,17 +33,17 @@ func do_draw_gizmos():
 func _ready():
 	if  draw_gizmos:		
 		do_draw_gizmos()
-	if not Engine.is_editor_hint():	
+	if not Engine.is_editor_hint():
 		head_node = head.instantiate()
 		$"../".add_child.call_deferred(head_node)
-		head_node.pause = true	
-		generate_worm()	
+		head_node.pause = true
+		generate_worm()
 
 
 func gen_segment(i: int) -> float:
 	var angle = start_angle + i * 2 * PI * frequency / length 
-	var size = abs(base_size + sin(angle) * (multiplier)) 
-	return size
+	var size = abs(base_size + sin(angle)) 
+	return remap(size,0,1,0,multiplier)
 	
 	
 
@@ -56,12 +56,12 @@ func generate_worm():
 		size = gen_segment(i)/2
 		last_position.x = 0
 		last_position.y = 0
-		var body_part = body_scene.instantiate()
-		var csg : CSGBox3D = body_part.get_child(0) 
-		csg.size = Vector3(size, size, size)  
-		body_part.global_transform.origin = last_position
+		var body_part = CSGBox3D.new()
+		last_position.z -= size/2	
+		body_part.transform.origin = last_position
+		body_part.size = Vector3(size, size, size)
+		body_part.transform.origin = last_position
 		head_node.add_child.call_deferred(body_part)
-		last_position.z -= abs(size)
 	
 
 
