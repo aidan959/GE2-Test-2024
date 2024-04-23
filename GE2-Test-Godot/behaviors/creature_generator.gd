@@ -18,6 +18,10 @@ func _ready():
 
 	for i in length:
 		var node = head_scene.instantiate()
+		node.name = "Tail{0}".format(i)
+		add_child(node)
+		
+		node.global_transform.origin.x = sin(angle * 1) 
 		print(sin(angle * i))
 	
 	
