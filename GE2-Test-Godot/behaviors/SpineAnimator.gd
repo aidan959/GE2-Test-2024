@@ -4,7 +4,7 @@ class_name SpineAnimator extends Node
 @export var damping:float = 7
 @export var angular_damping:float = 20
 				
-@export var bones = [] 
+var bones = [] 
 var offsets = [] 
 
 func calculateOffsets():
@@ -28,7 +28,7 @@ func calculateOffsets():
 				offsets.push_back(offset)
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	calculateOffsets()
+	call_deferred("calculateOffsets")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

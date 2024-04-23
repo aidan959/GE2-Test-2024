@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b26ra08yh7e5m"]
+[gd_scene load_steps=8 format=3 uid="uid://b26ra08yh7e5m"]
 
 [ext_resource type="Script" path="res://behaviors/root.gd" id="1_prfgg"]
 [ext_resource type="Script" path="res://behaviors/creature_generator.gd" id="2_5mxg3"]
+[ext_resource type="Script" path="res://behaviors/SpineAnimator.gd" id="2_onr6u"]
 [ext_resource type="Script" path="res://behaviors/FPController.gd" id="5_8r2ni"]
 [ext_resource type="Environment" uid="uid://b5dnnkkpxo3qc" path="res://behaviors/seek_environment..tres" id="6_qamsj"]
 [ext_resource type="PackedScene" uid="uid://dc24oh4o5erhi" path="res://behaviors/SceneSwitcher.tscn" id="7_ybx0x"]
@@ -12,6 +13,9 @@
 script = ExtResource("1_prfgg")
 
 [node name="creature" type="Node" parent="."]
+
+[node name="SpineAnimator" type="Node" parent="creature"]
+script = ExtResource("2_onr6u")
 
 [node name="creature_generator" type="Node3D" parent="."]
 script = ExtResource("2_5mxg3")

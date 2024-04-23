@@ -36,8 +36,10 @@ func _ready():
 	if not Engine.is_editor_hint():
 		head_node = head.instantiate()
 		creature = $"../creature"
-		creature.add_child.call_deferred(head_node)
+		creature.add_child(head_node)
 		head_node.pause = true
+		creature.get_child(0).bonePaths.append(head_node.get_path())
+		
 		generate_worm()
 
 
@@ -62,7 +64,8 @@ func generate_worm():
 		body_part.transform.origin = last_position
 		body_part.size = Vector3(size, size, size)
 		body_part.transform.origin = last_position
-		head_node.add_child.call_deferred(body_part)
+		creature.add_child(body_part)
+		creature.get_child(0).bonePaths.append(body_part.get_path())
 		
 	
 
