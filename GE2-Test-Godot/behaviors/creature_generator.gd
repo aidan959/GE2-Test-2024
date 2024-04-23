@@ -11,7 +11,7 @@ extends Node3D
 @export var body_scene: PackedScene = preload("res://body_part.tscn")
 
 var head_node: Boid 
-
+var creature: Node
 func _process(_delta):
 	if Engine.is_editor_hint() and draw_gizmos:	
 		DebugDraw3D.clear_all()	
@@ -35,7 +35,8 @@ func _ready():
 		do_draw_gizmos()
 	if not Engine.is_editor_hint():
 		head_node = head.instantiate()
-		$"../".add_child.call_deferred(head_node)
+		creature = $"../creature"
+		creature.add_child.call_deferred(head_node)
 		head_node.pause = true
 		generate_worm()
 
@@ -56,12 +57,13 @@ func generate_worm():
 		size = gen_segment(i)/2
 		last_position.x = 0
 		last_position.y = 0
-		var body_part = CSGBox3D.new()
+		var body_part = body_scene.instantiate()
 		last_position.z -= size
 		body_part.transform.origin = last_position
 		body_part.size = Vector3(size, size, size)
 		body_part.transform.origin = last_position
 		head_node.add_child.call_deferred(body_part)
+		
 	
 
 
