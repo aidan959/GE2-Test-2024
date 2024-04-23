@@ -27,12 +27,11 @@ func do_draw_gizmos():
 		size = gen_segment(i)
 		last_position.x = -size/2
 		last_position.y = -size/2
-	
 		last_position.z -= abs(size)
 		DebugDraw3D.draw_box(last_position, Quaternion.IDENTITY, Vector3(size, size, size), Color(1, 1, 0))
 
 func _ready():
-	if Engine.is_editor_hint() and draw_gizmos:		
+	if  draw_gizmos:		
 		do_draw_gizmos()
 	if not Engine.is_editor_hint():	
 		head_node = head.instantiate()
@@ -49,18 +48,20 @@ func gen_segment(i: int) -> float:
 	
 
 func generate_worm():
-	var size = gen_segment(0)
+	var size = gen_segment(0)/2
 	var last_position: Vector3 = Vector3.ZERO
+	last_position.z = abs(size)
+
 	for i in range(length):
-		size = gen_segment(i)
-		last_position.x = -size/2
-		last_position.y = -size/2
-		last_position.z -= abs(size/2)
+		size = gen_segment(i)/2
+		last_position.x = 0
+		last_position.y = 0
 		var body_part = body_scene.instantiate()
 		var csg : CSGBox3D = body_part.get_child(0) 
 		csg.size = Vector3(size, size, size)  
 		body_part.global_transform.origin = last_position
 		head_node.add_child.call_deferred(body_part)
+		last_position.z -= abs(size)
 	
 
 
