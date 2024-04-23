@@ -52,5 +52,6 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
-    }
+    },
+    "godotTools.editorPath.godot4": "c:\\Users\\aidan\\Downloads\\Godot_v4.2.2-stable_win64.exe\\Godot_v4.2.2-stable_win64.exe"
 }
