@@ -18,17 +18,21 @@ func _process(delta):
 
 
 func do_draw_gizmos():
-	var last_position = Vector3.ZERO
+	var size = gen_segment(0)
+	var last_position: Vector3 = Vector3.ZERO
+	last_position.x = -size/2
+	last_position.y = -size/2
+	last_position.z = -size/2
+	var last_size = 0.0
+
 	for i in range(length):
-		var size = gen_segment(i)
-		var pos : Vector3
-		if i != 0:
-			pos = Vector3(last_position.z - abs(size), -size/2, -size/2)
-		else:
-			pos = Vector3(0, -size/2, -size/2)
-			
-		DebugDraw3D.draw_box(pos, Quaternion.IDENTITY, Vector3(size, size, size), Color(1, 0, 0))
-		last_position.z = pos.z
+		size = gen_segment(i)
+		
+		DebugDraw3D.draw_box(last_position, Quaternion.IDENTITY, Vector3(size, size, size), Color(1, 1, 0))
+		last_position.z -= abs(size)/2 + abs(last_size)/2
+		last_position.x = size/2
+		last_position.y = size/2
+		last_size =size
 func _ready():
 	if Engine.is_editor_hint() and draw_gizmos:		
 		do_draw_gizmos()
