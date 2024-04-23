@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl3c22kpvu5e4"]
+
+[ext_resource type="Script" path="res://behaviors/Boid.gd" id="1_qc413"]
+[ext_resource type="Script" path="res://behaviors/Harmonic.gd" id="2_k0332"]
+[ext_resource type="Script" path="res://behaviors/NoiseWander.gd" id="3_y755n"]
+
+[node name="Head" type="CharacterBody3D"]
+script = ExtResource("1_qc413")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+
+[node name="Harmonic" type="Node" parent="."]
+script = ExtResource("2_k0332")
+
+[node name="NoiseWander" type="Node" parent="."]
+script = ExtResource("3_y755n")
