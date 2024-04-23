@@ -14,7 +14,10 @@ script = ExtResource("1_prfgg")
 
 [node name="creature_generator" type="Node3D" parent="."]
 script = ExtResource("2_5mxg3")
-angle = null
+length = 21
+frequency = 2.19
+start_angle = 3.33
+multiplier = 5.04
 head_scene = ExtResource("3_v4coc")
 
 [node name="Player" type="CharacterBody3D" parent="."]
