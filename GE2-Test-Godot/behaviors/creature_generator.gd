@@ -10,6 +10,9 @@ extends Node3D
 @export var head_scene: PackedScene = null
 
 func _process(delta):
+	if Engine.is_editor_hint() and draw_gizmos:	
+		DebugDraw3D.clear_all()	
+		do_draw_gizmos()
 	pass
 	
 
@@ -44,5 +47,12 @@ func _ready():
 	
 	
 
-
+func generate_worm():
+	for i in range(length):
+		var angle = start_angle + sin(deg_to_rad(i))
+		var size = base_size * pow(multiplier, i)
+		var node = head_scene.instance()
+		node.name = "Tail{0}".format(i)
+		node.global_transform.origin.x = sin(angle * 1)
+		add_child(node)
 
