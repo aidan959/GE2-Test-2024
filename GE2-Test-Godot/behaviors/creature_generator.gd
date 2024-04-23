@@ -21,8 +21,8 @@ func do_draw_gizmos():
 	for i in range(length):
 		var angle = start_angle + i * 2 * PI / length  
 		var size = base_size * (1 + sin(angle)) 
-		DebugDraw3D.draw_box(Vector3(i,0,0),Quaternion.IDENTITY	, Vector3(size, size, size), Color(0, 1, 0) )
-
+		DebugDraw3D.draw_box(last_position,Quaternion.IDENTITY	, Vector3(size, size, size), Color(0, 1, 0) )
+		last_position.x += size
 func _ready():
 	if Engine.is_editor_hint() and draw_gizmos:		
 		do_draw_gizmos()
