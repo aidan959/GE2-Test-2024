@@ -16,8 +16,9 @@ script = ExtResource("1_prfgg")
 script = ExtResource("2_5mxg3")
 length = 21
 frequency = 2.19
-start_angle = 3.33
-multiplier = 5.04
+start_angle = 16.75
+base_size = 0.96
+multiplier = 5.22
 head_scene = ExtResource("3_v4coc")
 
 [node name="Player" type="CharacterBody3D" parent="."]
